@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Angular.Core.Controllers
 {
@@ -30,6 +33,23 @@ namespace Angular.Core.Controllers
                     Summary = Summaries[rng.Next(Summaries.Length)]
                 }).ToList();
             }
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(long), 200)]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            if (file == null)
+                return BadRequest("Invalid file");
+
+            var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            var content = memoryStream.ToArray();
+
+            var writer = System.IO.File.CreateText(file.FileName);
+            await writer.WriteAsync(Encoding.UTF8.GetString(content));
+
+            return Ok(file.Length);
         }
 
         [HttpGet("[action]")]

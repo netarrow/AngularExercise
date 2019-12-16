@@ -10,6 +10,10 @@ export class WeatherForecastService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, ) {
   }
 
+  upload(file: any): Observable<number> {
+    return this.http.post<number>(this.baseUrl + 'api/SampleData/Upload', file);
+  }
+
   updateForecast(updatedForecast: WeatherForecast): Observable<boolean> {
     return this.http.put<boolean>(this.baseUrl + 'api/SampleData/UpdateWeatherForecasts', updatedForecast);
   }
