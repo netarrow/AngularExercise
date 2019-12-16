@@ -13,8 +13,6 @@ export class AppComponent implements OnInit {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js').then(registration => {
 
-            
-
           console.log(`Service Worker registered! Scope: ${registration.scope}`);
 
           if (typeof Notification !== 'undefined') {

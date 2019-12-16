@@ -1,7 +1,12 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js");
 
+function Do() {
+    setTimeout(Do, 5000);
+    showNotification('qq');
+}
+
 if (workbox) {
-  console.log('Yay! Workbox is loaded 🎉');
+    console.log('Yay! Workbox is loaded 🎉');
 
   var showNotification = (msg) => {
       if (self.registration.showNotification) {
@@ -16,13 +21,9 @@ if (workbox) {
     }
     };
 
-    self.addEventListener('activate', event => {
-        console.log('activate');
-    });
-
     self.addEventListener('message', event => {
         if (event.data.type === 'notify') {
-            showNotification(event.data.msg);
+            setTimeout(Do, 5000);
         }
     });
 
