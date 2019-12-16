@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Close')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <ngb-alert [dismissible]="false" *ngIf="isInvalid">
+            <strong>Warning!</strong> All fields are mandatory
+          </ngb-alert>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <ngb-datepicker #d [formControl]='date'></ngb-datepicker>
+        </div>
+        <div class="col-md-6">
+          <div class="container-fluid">
+            <div class="row">
+              <label>Temperature</label>
+              <input type="number" [formControl]='temperature'/>
+            </div>
+            <div class="row">
+              <label>Summary</label>
+              <textarea [formControl]='summary'></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-info" (click)="isEdit ? updateForecast() : saveForecast()">OK</button>
+</div>
