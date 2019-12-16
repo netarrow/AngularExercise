@@ -1,29 +1,36 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js");
 
-function Do() {
-    setTimeout(Do, 5000);
-    showNotification('qq');
-}
+function checknewposts() {
+    console.log('checknewposts called');
+    fetch('https://localhost:44384/api/SampleData/CheckNewPost').then((response) => {
+        response.json().then(posts => {
+            console.log('posts: ' + posts);
+            if (posts && posts.length > 0) showNotification('New Post');
+        });
+    }).finally(() => setTimeout(checknewposts, 30000));
+    
+};
 
 if (workbox) {
     console.log('Yay! Workbox is loaded 🎉');
 
-  var showNotification = (msg) => {
-      if (self.registration.showNotification) {
-          console.log('showing');
+    var showNotification = (msg) => {
+        if (self.registration.showNotification) {
+            console.log('showing');
 
-          self.registration.showNotification('Background sync success!', {
-              body: msg
-      });
-           
-          console.log('shown');
-          
-    }
+            self.registration.showNotification('Background sync success!', {
+                body: msg
+            });
+
+            console.log('shown');
+
+        }
     };
 
     self.addEventListener('message', event => {
-        if (event.data.type === 'notify') {
-            setTimeout(Do, 5000);
+        if (event.data.type === 'checknewposts') {
+            console.log('checknewpost event');
+            setTimeout(checknewposts, 1000);
         }
     });
 
@@ -50,5 +57,5 @@ if (workbox) {
     });
 
 } else {
-  console.log('Boo! Workbox not loaded');
+    console.log('Boo! Workbox not loaded');
 }

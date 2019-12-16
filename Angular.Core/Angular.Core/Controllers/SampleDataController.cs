@@ -33,10 +33,10 @@ namespace Angular.Core.Controllers
         }
 
         [HttpGet("[action]")]
-        [ProducesResponseType(typeof(IEnumerable<string>), 200)]
+        [ProducesResponseType(typeof(List<string>), 200)]
         public IActionResult CheckNewPost()
         {
-            var todayMinute = DateTime.Today.Minute;
+            var todayMinute = DateTime.Now.Minute;
 
             if (todayMinute % 2 == 0)
             {
