@@ -33,6 +33,19 @@ namespace Angular.Core.Controllers
         }
 
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<string>), 200)]
+        public IActionResult CheckNewPost()
+        {
+            var todayMinute = DateTime.Today.Minute;
+
+            if (todayMinute % 2 == 0)
+            {
+                return Ok(new List<string>() {$"New {todayMinute}"});
+            }
+            else return Ok(new List<string>());
+        }
+
+        [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<WeatherForecast>), 200)]
         public IActionResult WeatherForecasts()
         {
