@@ -13,6 +13,8 @@ namespace Angular.Core.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        private readonly GlobalHostSignalr _host;
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -20,8 +22,9 @@ namespace Angular.Core.Controllers
 
         static List<WeatherForecast> inMemoryDb;
 
-        public SampleDataController()
+        public SampleDataController(GlobalHostSignalr host)
         {
+            _host = host;
             if (inMemoryDb == null)
             {
                 var rng = new Random();
@@ -84,6 +87,7 @@ namespace Angular.Core.Controllers
                 request.Id = inMemoryDb.Max(_ => _.Id) + 1;
                 inMemoryDb.Add(request);
 
+                _host.SendToAll($"New forecast added {request.TemperatureC}");
                 return Ok(request);
             }
             catch (Exception ex)
