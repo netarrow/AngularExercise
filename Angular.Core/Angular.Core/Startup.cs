@@ -1,3 +1,6 @@
+using System;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using Angular.Core.NotifyService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +24,7 @@ namespace Angular.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+            services.AddSingleton<GlobalHostSignalr>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -73,6 +77,14 @@ namespace Angular.Core
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+
+            var sp = app.ApplicationServices;
+
+            Observable.Interval(TimeSpan.FromSeconds(5), Scheduler.Default).Subscribe((tick) =>
+            {
+                var host = sp.GetService<GlobalHostSignalr>();
+                host.SendToAll($"tick numero {tick}");
             });
 
         }
