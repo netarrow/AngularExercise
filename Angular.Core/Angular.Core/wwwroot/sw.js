@@ -2,7 +2,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox
 
 function checknewposts() {
     console.log('checknewposts called');
-    fetch('https://localhost:44384/api/SampleData/CheckNewPost').then((response) => {
+    fetch('api/SampleData/CheckNewPost').then((response) => {
         response.json().then(posts => {
             console.log('posts: ' + posts);
             if (posts && posts.length > 0) showNotification('New Post');

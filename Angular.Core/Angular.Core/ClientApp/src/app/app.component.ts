@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
             Notification.requestPermission();
           }
 
-          navigator.serviceWorker.controller.postMessage({ type: 'checknewposts' });
+            registration.active.postMessage({ type: 'checknewposts' });
 
         })
           .catch(err => {
