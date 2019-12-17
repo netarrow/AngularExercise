@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FusionComponent } from "./fusion/home.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    AddForecastContent
+    AddForecastContent,
+    FusionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +39,7 @@ import { ToastrModule } from 'ngx-toastr';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'fusion', component: FusionComponent },
     ])
   ],
   providers: [],
