@@ -1,8 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddForecastContent } from '../shared/AddForecastContent';
+import { AddForecastContent } from './AddForecastContent';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { WeatherForecast, WeatherForecastService } from './weather-forecast-service.service';
+import { WeatherForecast, WeatherForecastService } from '../shared/weather-forecast-service.service';
+import { UserNotifyService } from  "../shared/user-notify-service";
 
 @Component({
   selector: 'app-fetch-data',
@@ -17,23 +18,29 @@ export class FetchDataComponent {
 
   currentFile: any;
 
-  constructor(private modalService: NgbModal, private service: WeatherForecastService) {
+  constructor(private modalService: NgbModal, private service: WeatherForecastService, private notify: UserNotifyService) {
     service.getForecast().subscribe(data => this.forecasts = data);
   }
 
   onFileChange(event) {
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
-      var file = event.target.files[0];
+      var file: File = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
         console.log(file);
 
-        this.currentFile = file;
+        if (file.type !== "image/png") {
+          this.notify.notifyUser("Only images are supported");
+          event.target.value = '';
+        } else {
 
-        this.form.patchValue({
-          fileToUpload: reader.result
-        });
+          this.currentFile = file;
+
+          this.form.patchValue({
+            fileToUpload: reader.result
+          });
+        }
       };
     }
   }

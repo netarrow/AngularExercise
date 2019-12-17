@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NgbActiveModal, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, Validators } from '@angular/forms';
-import { WeatherForecastService, WeatherForecast } from '../fetch-data/weather-forecast-service.service';
+import { WeatherForecastService, WeatherForecast } from '../shared/weather-forecast-service.service';
 import { d } from '@angular/core/src/render3';
 
 @Component({
