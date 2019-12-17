@@ -31,12 +31,17 @@ if (workbox) {
         if (event.data.type === 'checknewposts') {
             console.log('checknewpost event');
             setTimeout(checknewposts, 1000);
+        } else if (event.data.type === 'setBaseUrl') {
+            self.registration.baseUrl = event.data.url;
         }
     });
 
-    self.addEventListener('notificationclick', function (event) {
+    self.addEventListener('notificationclick', event => {
         console.log('notification clicked');
-        var url = "https://localhost:44384/";
+
+        console.log(self.registration.baseUrl);
+
+        var url = self.registration.baseUrl;
         event.notification.close(); // Android needs explicit close.
         event.waitUntil(
             clients.matchAll({ type: 'window' }).then(windowClients => {
@@ -52,8 +57,7 @@ if (workbox) {
                 if (clients.openWindow) {
                     return clients.openWindow(url);
                 }
-            })
-        );
+            }));
     });
 
 } else {
