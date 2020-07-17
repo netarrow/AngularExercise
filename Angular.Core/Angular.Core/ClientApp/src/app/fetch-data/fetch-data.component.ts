@@ -15,7 +15,9 @@ export class FetchDataComponent {
 
   currentFile: any;
 
-  constructor(private modalService: NgbModal, private service: WeatherForecastService, private notify: UserNotifyService) {
+  constructor(private modalService: NgbModal,
+    private service: WeatherForecastService,
+    private notify: UserNotifyService) {
     service.getForecast().subscribe(data => this.forecasts = data);
   }
 
