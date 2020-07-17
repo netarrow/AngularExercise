@@ -12,9 +12,6 @@ import { UserNotifyService } from  "../shared/user-notify-service";
 })
 export class FetchDataComponent {
   public forecasts: WeatherForecast[];
-  form: FormGroup = new FormGroup({
-      fileToUpload:new FormControl('')
-  });
 
   currentFile: any;
 
@@ -37,9 +34,6 @@ export class FetchDataComponent {
 
           this.currentFile = file;
 
-          this.form.patchValue({
-            fileToUpload: reader.result
-          });
         }
       };
     }
